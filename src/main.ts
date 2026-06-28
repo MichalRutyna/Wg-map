@@ -1,8 +1,9 @@
-import { Application, Point } from 'pixi.js';
+import {Application, Assets, Point} from 'pixi.js';
 import { Province } from './game/elements/Province';
 import { CameraContainer } from './game/CameraContainer';
 import { Map } from './game/Map';
 import data from "./assets/mapa.json"
+import { GUIContainer } from './game/ui/GUIContainer';
 
 (async () => {
   // ----------- Basic init ------------------
@@ -18,12 +19,14 @@ import data from "./assets/mapa.json"
 
   document.getElementById('map-root')?.appendChild(app.canvas);
 
+  await Assets.load('offLine2.png')
 
-  // ----------- Creating the map ------------------
+  // ----------- Creating main containers ------------------
 
   const cameraContainer = new CameraContainer();
   const map = new Map(cameraContainer)
 
+  const guiContainer = new GUIContainer(app);
 
   // ----------- Populating the map ------------------
 
@@ -38,6 +41,7 @@ import data from "./assets/mapa.json"
   // ----------- Finalizing display ------------------
 
   app.stage.addChild(cameraContainer);
+  app.stage.addChild(guiContainer);
 
   cameraContainer.enablePan(app);
   cameraContainer.enableZoom(app);

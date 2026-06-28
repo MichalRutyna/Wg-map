@@ -10,6 +10,7 @@
     "parse_map": "node src/util/svg_parser.js"
   },
   "dependencies": {
+    "@pixi/ui": "^2.3.2",
     "fs": "^0.0.1-security",
     "pixi-filters": "^6.1.5",
     "pixi.js": "^8.6.6"
