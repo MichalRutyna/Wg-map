@@ -1,20 +1,27 @@
 import * as PIXI from "pixi.js";
 import { GlowFilter } from "pixi-filters";
-import { lighten } from "./util/colors";
-import { HOVER_SCALE } from "./settings";
+import { lighten } from "../../util/colors";
+import { HOVER_SCALE } from "../../settings";
 
 
+/**
+ * Represents a single Province on the map
+ */
 export class Province {
     id: string;
     container: PIXI.Container;
     color: number;
 
     private points: PIXI.Point[];
+    private clickCallback: (p: Province) => void 
+
     private graphics: PIXI.Graphics;
+    /** glow is kept on a seperate layer so it doesn't mess with antialiasing 
+     * @private */
     private glowGraphics: PIXI.Graphics;
+
     private glowFilter: GlowFilter;
     private hoverColor: number;
-    private clickCallback: (p: Province) => void 
     private centroid: PIXI.Point;
 
     constructor(id: string, points: PIXI.Point[], color: number, clickCallback: (p: Province) => void) {
@@ -59,7 +66,17 @@ export class Province {
         this.graphics.on("pointertap", () => this.onClick());
     }
 
-    calculateCentroid(): PIXI.Point {
+    deselect() {
+        this.removeGlow();
+        this.container.zIndex = 1;
+    }
+
+    select() {
+        this.container.zIndex = 3;
+        this.applyGlow();
+    }
+
+    private calculateCentroid(): PIXI.Point {
         if (this.points.length === 0) return new PIXI.Point(0, 0);
         let sumX = 0;
         let sumY = 0;
@@ -83,46 +100,36 @@ export class Province {
         }
     }
 
-    draw(fillColor: number = this.color) {
+    private draw(fillColor: number = this.color) {
         this.drawTo(this.graphics, fillColor, true);
         this.drawTo(this.glowGraphics, fillColor, false);
     }
 
-    onHover() {
+    private onHover() {
         this.draw(this.hoverColor);
         this.container.scale.set(HOVER_SCALE);
     }
 
-    onOut() {
+    private onOut() {
         this.container.scale.set(1);
         this.draw(this.color);
     }
 
-    onClick() {
+    private onClick() {
         this.clickCallback(this)
     }
 
-    setColor(newColor: number) {
+    private setColor(newColor: number) {
         this.color = newColor;
         this.hoverColor = lighten(newColor);
         this.draw();
     }
 
-    deselect() {
-        this.removeGlow();
-        this.container.zIndex = 1;
-    }
-
-    select() {
-        this.container.zIndex = 3;
-        this.applyGlow();
-    }
-
-    removeGlow() {
+    private removeGlow() {
         this.glowGraphics.visible = false;
     }
 
-    applyGlow() {
+    private applyGlow() {
         this.glowGraphics.visible = true;
     }
 }

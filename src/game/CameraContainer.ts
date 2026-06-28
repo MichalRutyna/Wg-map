@@ -1,20 +1,25 @@
 import { Application, Container, Point } from "pixi.js";
-import { Province } from "./Province";
 import {
     DEFAULT_GLOBAL_SCALE,
     MAX_ZOOM,
     MIN_ZOOM,
     ZOOM_FACTOR,
-} from "./settings";
+} from "../settings";
 
 
+/**
+ * Responsible for camera functions - zooming and panning 
+ */
 export class CameraContainer extends Container {
-    /* 
-    Responsible for camera functions - zooming and panning 
-    */
+    /**
+     * The scale of the whole container
+     * meant for zoom
+     */
     globalScale: number;
-    private dragging = false;
+
+    /** for making sure pointerCapture targets the correct pointer */
     private activePointerId = -1;
+    private dragging = false;
     private lastPointer = new Point();
 
     constructor(globalScale = DEFAULT_GLOBAL_SCALE) {
@@ -65,6 +70,7 @@ export class CameraContainer extends Container {
             const worldX = (mouse.x - this.x) / oldScale;
             const worldY = (mouse.y - this.y) / oldScale;
 
+            // direction of zooming
             const direction = e.deltaY > 0 ? 1 / ZOOM_FACTOR : ZOOM_FACTOR;
             const newScale = Math.max(
                 MIN_ZOOM,
@@ -78,7 +84,7 @@ export class CameraContainer extends Container {
             this.y = mouse.y - worldY * newScale;
         });
     }
-    // local coordinate space
+    /** A Point in local coordinate space */
     private canvasPointer(
         app: Application,
         e: { clientX: number; clientY: number },
