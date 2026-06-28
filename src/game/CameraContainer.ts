@@ -1,6 +1,7 @@
 import { Application, Container, Point } from "pixi.js";
 import {
     DEFAULT_GLOBAL_SCALE,
+    DEFAULT_CAMERA_POSITION,
     MAX_ZOOM,
     MIN_ZOOM,
     ZOOM_FACTOR,
@@ -22,10 +23,12 @@ export class CameraContainer extends Container {
     private dragging = false;
     private lastPointer = new Point();
 
-    constructor(globalScale = DEFAULT_GLOBAL_SCALE) {
+    constructor(globalScale = DEFAULT_GLOBAL_SCALE, defaultPosition = DEFAULT_CAMERA_POSITION) {
         super();
         this.globalScale = globalScale;
         this.scale.set(globalScale);
+        this.x = defaultPosition.x;
+        this.y = defaultPosition.y;
         this.eventMode = "passive";
     }
 

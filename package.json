@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "parse_map": "node src/util/svg_parser.js"
   },
   "dependencies": {
     "fs": "^0.0.1-security",

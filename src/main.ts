@@ -31,7 +31,7 @@ import data from "./assets/mapa.json"
     const points = item.points.map(
       ([x, y]: number[]) => new Point(x, y)
     );
-    map.addProvince(new Province(item.id, points, Math.random()*16_777_216, map.onProvinceClicked));
+    map.addProvince(new Province(item.id, item.name, points, Math.random()*16_777_216, map.onProvinceClicked));
   });
 
   

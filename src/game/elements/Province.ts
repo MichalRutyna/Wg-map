@@ -9,6 +9,7 @@ import { HOVER_SCALE } from "../../settings";
  */
 export class Province {
     id: string;
+    name: string;
     container: PIXI.Container;
     color: number;
 
@@ -24,8 +25,9 @@ export class Province {
     private hoverColor: number;
     private centroid: PIXI.Point;
 
-    constructor(id: string, points: PIXI.Point[], color: number, clickCallback: (p: Province) => void) {
+    constructor(id: string, name: string, points: PIXI.Point[], color: number, clickCallback: (p: Province) => void) {
         this.id = id;
+        this.name = name;
         this.points = points;
         this.color = color;
         this.clickCallback = clickCallback

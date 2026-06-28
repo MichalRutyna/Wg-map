@@ -29,11 +29,10 @@ export class Map {
         this.container.addChild(province.container)
     }
 
+    /**
+     * A callback for when a province is clicked
+     */
     onProvinceClicked(province: Province) {
-        /**
-         * A callback for when a province is clicked
-         */
-        console.log(`Province selected: ${province.id}`)
         const realProvince = this.provinces.find(
             p => p.id === province.id
         );
@@ -47,6 +46,7 @@ export class Map {
             this.selectedProvince?.deselect()
             this.selectedProvince = realProvince
             this.selectedProvince.select()
+            console.log(`Province selected: ${province.name} (${province.id})`)
         }
     
     }

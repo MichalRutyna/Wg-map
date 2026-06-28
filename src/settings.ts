@@ -9,6 +9,11 @@ export const HOVER_SCALE = 1.02;
 export const DEFAULT_GLOBAL_SCALE = 3;
 
 /**
+ * The default camera position for when the application is fist opened
+ */
+export const DEFAULT_CAMERA_POSITION = { x: 200, y: -100 };
+
+/**
  *  The smallest scale that can be achieved by zoooming
  */
 export const MIN_ZOOM = 0.5;
