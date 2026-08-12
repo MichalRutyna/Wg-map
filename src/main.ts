@@ -1,9 +1,11 @@
-import {Application, Assets, Point} from 'pixi.js';
-import { Province } from './game/elements/Province';
-import { CameraContainer } from './game/ui/CameraContainer';
-import { Map } from './game/Map';
-import data from "./assets/mapa.json"
-import { GUIContainer } from './game/ui/GUIContainer';
+import { Application, Assets, Point } from 'pixi.js';
+import { Province } from "./game/elements/Province";
+import { CameraContainer } from "./ui/CameraContainer";
+import { World } from './game/World';
+import data from "./assets/mapa.json";
+import { HUDContainer } from './ui/hud/HUDContainer';
+import {WorldView} from "./ui/WorldView";
+import {ProvinceView} from "./ui/elements/ProvinceView";
 
 (async () => {
   // ----------- Basic init ------------------
@@ -19,14 +21,19 @@ import { GUIContainer } from './game/ui/GUIContainer';
 
   document.getElementById('map-root')?.appendChild(app.canvas);
 
-  await Assets.load('offLine2.png')
+  await Assets.load('offLine2.png');
 
   // ----------- Creating main containers ------------------
 
   const cameraContainer = new CameraContainer();
-  const map = new Map(cameraContainer)
+  const worldView = new WorldView();
+  cameraContainer.addChild(worldView);
 
-  const guiContainer = new GUIContainer(app);
+  const guiContainer = new HUDContainer(app);
+
+  // ----------- Creating the data model ----------------------
+
+  const world = new World();
 
   // ----------- Populating the map ------------------
 
@@ -34,13 +41,18 @@ import { GUIContainer } from './game/ui/GUIContainer';
     const points: Point[] = item.points.map(
       ([x, y]: number[]): Point => new Point(x, y)
     );
-    map.addProvince(
-        new Province(
-            item.id,
-            item.name,
+    const prov = new Province(
+        item.id,
+        item.name,
+    )
+
+    world.addProvince(prov);
+    worldView.addProvince(
+        new ProvinceView(
+            prov,
             points,
             Math.random()*16_777_216, // 2^24 - semi-random color
-            map.onProvinceClicked
+            worldView.onProvinceClicked,
         )
     );
   });

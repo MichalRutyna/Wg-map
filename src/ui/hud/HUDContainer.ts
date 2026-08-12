@@ -2,7 +2,7 @@ import {Application, Container} from "pixi.js";
 import {ToolbarButton} from "./elements/ToolbarButton";
 
 
-export class GUIContainer extends Container {
+export class HUDContainer extends Container {
     constructor(app: Application) {
         super();
 

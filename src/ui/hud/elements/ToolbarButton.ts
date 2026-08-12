@@ -1,6 +1,6 @@
 import { Button } from "@pixi/ui";
-import {Assets, Container, Graphics, Sprite, Text, Texture} from "pixi.js";
-import {darken, lighten} from "../../../util/colors";
+import { Container, Graphics, Sprite } from "pixi.js";
+import {darken, lighten} from "util/colors";
 
 const color = 0x222222;
 

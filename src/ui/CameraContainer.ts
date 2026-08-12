@@ -5,7 +5,7 @@ import {
     MAX_ZOOM,
     MIN_ZOOM,
     ZOOM_FACTOR,
-} from "../../settings";
+} from "settings";
 
 
 /**

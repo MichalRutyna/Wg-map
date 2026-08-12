@@ -1,4 +1,4 @@
-export class Province {
+export class Army {
     id: string;
     name: string;
 
