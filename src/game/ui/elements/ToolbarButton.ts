@@ -1,6 +1,6 @@
 import { Button } from "@pixi/ui";
 import {Assets, Container, Graphics, Sprite, Text, Texture} from "pixi.js";
-import {darken, lighten} from "../../util/colors";
+import {darken, lighten} from "../../../util/colors";
 
 const color = 0x222222;
 
@@ -16,7 +16,9 @@ const hardcodedArgs = {
 };
 const defaultAction = () => { console.log("Button clicked"); }
 
-
+/*
+* A generic button class for the pinned toolbar
+*/
 export class ToolbarButton extends Container {
     constructor(text: string, onPress: () => void = defaultAction) {
         super();
@@ -33,12 +35,6 @@ export class ToolbarButton extends Container {
 
         const button = new Button(this);
 
-        // const buttonText = new Text({
-        //     text: text,
-        //     style: {
-        //         fill:  0xffffff
-        //     }
-        // })
         const buttonText = Sprite.from("offLine2.png");
         buttonText.width = width * 0.8;
         buttonText.height = height * 0.8;
@@ -47,13 +43,13 @@ export class ToolbarButton extends Container {
 
         const buttonBg = new Graphics();
 
-        const defaultButton = (fillColor = color) => {
+        const defaultButton = (fillColor: number = color) => {
             buttonBg
                 .clear()
-                .roundRect(8, 8, width - 4, height - 4, radius)
+                .roundRect(7, 7, width - 4, height - 4, radius) // shadow
                 .stroke({
                     color: disabled ? darken(disabledColor)  : darken(fillColor),
-                    width: 3
+                    width: 7
                 })
                 .roundRect(0, 0, width, height, radius)
                 .fill(disabled ? disabledColor : fillColor);
@@ -101,10 +97,9 @@ export class ToolbarButton extends Container {
             defaultButton();
         });
 
-        this.addChild(buttonBg, buttonText)
-
         button.onPress.connect(onPress);
 
+        this.addChild(buttonBg, buttonText)
         defaultButton();
     }
 }

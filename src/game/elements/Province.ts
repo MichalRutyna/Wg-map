@@ -10,19 +10,22 @@ import { HOVER_SCALE } from "../../settings";
 export class Province {
     id: string;
     name: string;
-    container: PIXI.Container;
     color: number;
+    container: PIXI.Container;
 
-    private points: PIXI.Point[];
-    private clickCallback: (p: Province) => void 
+    private readonly points: PIXI.Point[];
 
-    private graphics: PIXI.Graphics;
-    /** glow is kept on a seperate layer so it doesn't mess with antialiasing 
+    private readonly clickCallback: (p: Province) => void
+
+    private readonly graphics: PIXI.Graphics;
+    /** glow is kept on a seperate layer so it gets properly antialiased
      * @private */
-    private glowGraphics: PIXI.Graphics;
+    private readonly glowGraphics: PIXI.Graphics;
+    private readonly glowFilter: GlowFilter;
 
-    private glowFilter: GlowFilter;
+    // defaults to a slightly lighter color
     private hoverColor: number;
+    // for calculating the slight enlargement on hover
     private centroid: PIXI.Point;
 
     constructor(id: string, name: string, points: PIXI.Point[], color: number, clickCallback: (p: Province) => void) {
@@ -56,9 +59,13 @@ export class Province {
         this.container.pivot.set(this.centroid.x, this.centroid.y);
         this.container.position.set(this.centroid.x, this.centroid.y);
 
+        // passes events
         this.container.eventMode = "passive";
-        this.glowGraphics.eventMode = "none";
+        // processes events
         this.graphics.eventMode = "static";
+        // terminates events
+        this.glowGraphics.eventMode = "none";
+
         this.graphics.hitArea = new PIXI.Polygon(
             this.points.flatMap((p) => [p.x, p.y]),
         );

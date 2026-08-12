@@ -1,6 +1,6 @@
 import {Application, Assets, Point} from 'pixi.js';
 import { Province } from './game/elements/Province';
-import { CameraContainer } from './game/CameraContainer';
+import { CameraContainer } from './game/ui/CameraContainer';
 import { Map } from './game/Map';
 import data from "./assets/mapa.json"
 import { GUIContainer } from './game/ui/GUIContainer';
@@ -30,11 +30,19 @@ import { GUIContainer } from './game/ui/GUIContainer';
 
   // ----------- Populating the map ------------------
 
-  data.map((item) => {
-    const points = item.points.map(
-      ([x, y]: number[]) => new Point(x, y)
+  data.map((item): void => {
+    const points: Point[] = item.points.map(
+      ([x, y]: number[]): Point => new Point(x, y)
     );
-    map.addProvince(new Province(item.id, item.name, points, Math.random()*16_777_216, map.onProvinceClicked));
+    map.addProvince(
+        new Province(
+            item.id,
+            item.name,
+            points,
+            Math.random()*16_777_216, // 2^24 - semi-random color
+            map.onProvinceClicked
+        )
+    );
   });
 
   

@@ -1,5 +1,5 @@
 import {Application, Container} from "pixi.js";
-import {ToolbarButton} from "./ToolbarButton";
+import {ToolbarButton} from "./elements/ToolbarButton";
 
 
 export class GUIContainer extends Container {

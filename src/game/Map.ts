@@ -4,6 +4,7 @@ import { Province } from "./elements/Province";
 
 /**
  * The Map class represents the container of every map element
+ *
  * It's responsible for selecting a province
  */
 export class Map {
@@ -20,7 +21,7 @@ export class Map {
         this.container.sortableChildren = true
         this.provinces = new Array()
 
-        // a callback needs to be binded on construction
+        // a callback needs to be bound on construction
         this.onProvinceClicked = this.onProvinceClicked.bind(this)
     }
 
@@ -30,9 +31,10 @@ export class Map {
     }
 
     /**
-     * A callback for when a province is clicked
+     * The callback that will be passed into provinces
      */
     onProvinceClicked(province: Province) {
+        //
         const realProvince = this.provinces.find(
             p => p.id === province.id
         );

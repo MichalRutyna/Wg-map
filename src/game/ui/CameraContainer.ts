@@ -5,7 +5,7 @@ import {
     MAX_ZOOM,
     MIN_ZOOM,
     ZOOM_FACTOR,
-} from "../settings";
+} from "../../settings";
 
 
 /**
@@ -87,7 +87,7 @@ export class CameraContainer extends Container {
             this.y = mouse.y - worldY * newScale;
         });
     }
-    /** A Point in local coordinate space, takes page zoom into account */
+    /** A Point in the local coordinate space takes page zoom into account */
     private canvasPointer(
         app: Application,
         e: { clientX: number; clientY: number },
