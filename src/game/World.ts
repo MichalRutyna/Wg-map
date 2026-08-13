@@ -4,18 +4,18 @@ import { Province } from "game/elements/Province";
 /**
  * Contains province data models
  */
-export class World {
-    provinces: Map<string, Province>
+export class World implements DataContainer<Province>{
+    children: Map<string, Province>
 
     constructor() {
-        this.provinces = new Map();
+        this.children = new Map();
     }
 
-    addProvince(province: Province) {
-        this.provinces.set(province.id, province);
+    addChild(province: Province) {
+        this.children.set(province.id, province);
     }
 
-    getProvince(id: string): Province | undefined {
-        return this.provinces.get(id);
+    getChild(id: string): Province | undefined {
+        return this.children.get(id);
     }
 }

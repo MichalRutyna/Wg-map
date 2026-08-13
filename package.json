@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@pixi/ui": "^2.3.2",
+    "class-transformer": "^0.5.1",
     "pixi-filters": "^6.1.5",
     "pixi.js": "^8.6.6",
     "vite-tsconfig-paths": "^6.1.1"

@@ -1,35 +1,35 @@
-import * as PIXI from "pixi.js";
 import { GlowFilter } from "pixi-filters";
 import { lighten } from "util/colors";
 import { HOVER_SCALE } from "settings";
 import {Province} from "../../game/elements/Province";
+import {Container, Graphics, Point, Polygon} from "pixi.js";
 
 /**
  * A single Province on the map
  */
-export class ProvinceView extends PIXI.Container {
+export class ProvinceView extends Container {
     color: number;
 
     readonly province: Province;
 
-    private readonly points: PIXI.Point[];
+    private readonly points: Point[];
 
     private readonly clickCallback: (p: ProvinceView) => void
 
-    private readonly graphics: PIXI.Graphics;
+    private readonly graphics: Graphics;
     /** glow is kept on a seperate layer so it gets properly antialiased
      * @private */
-    private readonly glowGraphics: PIXI.Graphics;
+    private readonly glowGraphics: Graphics;
     private readonly glowFilter: GlowFilter;
 
     // defaults to a slightly lighter color
     private hoverColor: number;
     // for calculating the slight enlargement on hover
-    private centroid: PIXI.Point;
+    private centroid: Point;
 
     constructor(
         province: Province,
-        points: PIXI.Point[],
+        points: Point[],
         color: number,
         clickCallback: (p: ProvinceView) => void)
     {
@@ -42,8 +42,8 @@ export class ProvinceView extends PIXI.Container {
         this.hoverColor = lighten(color);
         this.centroid = this.calculateCentroid();
 
-        this.glowGraphics = new PIXI.Graphics();
-        this.graphics = new PIXI.Graphics();
+        this.glowGraphics = new Graphics();
+        this.graphics = new Graphics();
 
         this.glowFilter = new GlowFilter({
             distance: 15,
@@ -69,7 +69,7 @@ export class ProvinceView extends PIXI.Container {
         // terminates events
         this.glowGraphics.eventMode = "none";
 
-        this.graphics.hitArea = new PIXI.Polygon(
+        this.graphics.hitArea = new Polygon(
             this.points.flatMap((p) => [p.x, p.y]),
         );
 
@@ -88,18 +88,18 @@ export class ProvinceView extends PIXI.Container {
         this.applyGlow();
     }
 
-    private calculateCentroid(): PIXI.Point {
-        if (this.points.length === 0) return new PIXI.Point(0, 0);
+    private calculateCentroid(): Point {
+        if (this.points.length === 0) return new Point(0, 0);
         let sumX = 0;
         let sumY = 0;
         for (const pt of this.points) {
             sumX += pt.x;
             sumY += pt.y;
         }
-        return new PIXI.Point(sumX / this.points.length, sumY / this.points.length);
+        return new Point(sumX / this.points.length, sumY / this.points.length);
     }
 
-    private drawTo(graphics: PIXI.Graphics, fillColor: number, withStroke: boolean) {
+    private drawTo(graphics: Graphics, fillColor: number, withStroke: boolean) {
         graphics.clear();
         graphics.moveTo(this.points[0].x, this.points[0].y);
         for (let i = 1; i < this.points.length; i++) {

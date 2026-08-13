@@ -1,7 +1,6 @@
-export class Army {
+export class Order {
     constructor(
         public id: string,
         public name: string,
-        public position: number[]
     ) {}
 }
