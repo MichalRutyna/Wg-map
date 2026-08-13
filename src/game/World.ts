@@ -2,7 +2,7 @@ import { Province } from "game/elements/Province";
 
 
 /**
- * Contains province models
+ * Contains province data models
  */
 export class World {
     provinces: Map<string, Province>
@@ -13,5 +13,9 @@ export class World {
 
     addProvince(province: Province) {
         this.provinces.set(province.id, province);
+    }
+
+    getProvince(id: string): Province | undefined {
+        return this.provinces.get(id);
     }
 }

@@ -1,5 +1,5 @@
 import { Container } from "pixi.js";
-import {ProvinceView} from "./elements/ProvinceView";
+import {ProvinceView} from "../elements/ProvinceView";
 
 /*
 * Contains province views
@@ -27,7 +27,7 @@ export class WorldView extends Container {
         this.addChild(province)
     }
 
-    getProvince(id: string) {
+    getProvince(id: string): ProvinceView | undefined {
         return this.provinces.get(id)
     }
 

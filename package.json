@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "fast-xml-parser": "^5.9.3",
+    "tsx": "^4.23.12",
     "vite": "^5.4.19"
   }
 }

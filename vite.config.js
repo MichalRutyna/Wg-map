@@ -5,8 +5,10 @@ export default defineConfig({
   plugins: [
     tsconfigPaths()
   ],
-  base: '/src',
   server: {
     open: true,
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
   },
 });

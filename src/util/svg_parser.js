@@ -106,8 +106,8 @@ function parsePath(d) {
     return points;
 }
 
-function collectPaths(node, out = []) {
-    if (!node || typeof node !== "object") return out;
+function collectPaths(node, out = [], names = []) {
+    if (!node || typeof node !== "object") return {geo: out, prov: names};
 
     for (const [key, value] of Object.entries(node)) {
         if (key === "path") {
@@ -116,19 +116,22 @@ function collectPaths(node, out = []) {
             for (const p of paths) {
                 out.push({
                     id: p.id ?? null,
-                    name: p["inkscape:label"] ?? p.id ?? null,
                     points: parsePath(p.d)
+                });
+                names.push({
+                    id: p.id ?? null,
+                    name: p["inkscape:label"] ?? p.id ?? null,
                 });
             }
         } else {
-            collectPaths(value, out);
+            collectPaths(value, out, names);
         }
     }
 
-    return out;
+    return {geo: out, prov: names};
 }
 
-const svgText = fs.readFileSync("src/assets/mapa.svg", "utf8");
+const svgText = fs.readFileSync("src/assets/map.svg", "utf8");
 
 const parser = new XMLParser({
     ignoreAttributes: false,
@@ -140,8 +143,12 @@ const xml = parser.parse(svgText);
 const result = collectPaths(xml);
 
 fs.writeFileSync(
-    "src/assets/mapa.json",
-    JSON.stringify(result, null, 2)
+    "src/assets/map.json",
+    JSON.stringify(result.geo, null, 2)
+);
+fs.writeFileSync(
+    "mockBackend/public/provinces.json",
+    JSON.stringify(result.prov, null, 2)
 );
 
-console.log(`Znaleziono ${result.length} ścieżek`);
+console.log(`Znaleziono ${result.geo.length} ścieżek`);

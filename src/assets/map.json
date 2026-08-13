@@ -1,7 +1,6 @@
 [
   {
     "id": "path14",
-    "name": "Aberdyfi",
     "points": [
       [
         99.317969,
@@ -71,7 +70,6 @@
   },
   {
     "id": "path108",
-    "name": "Archmouth",
     "points": [
       [
         114.74287,
@@ -125,7 +123,6 @@
   },
   {
     "id": "path107",
-    "name": "Worcester",
     "points": [
       [
         69.194226,
@@ -171,7 +168,6 @@
   },
   {
     "id": "path106",
-    "name": "Chester",
     "points": [
       [
         28.083557,
@@ -209,7 +205,6 @@
   },
   {
     "id": "path105",
-    "name": "Braedwardith",
     "points": [
       [
         33.031576,
@@ -275,7 +270,6 @@
   },
   {
     "id": "path2",
-    "name": "Laenteglos",
     "points": [
       [
         51.772034,
@@ -333,7 +327,6 @@
   },
   {
     "id": "path1",
-    "name": "Lanercost",
     "points": [
       [
         45.629773,
@@ -515,7 +508,6 @@
   },
   {
     "id": "path103",
-    "name": "Kinallen",
     "points": [
       [
         99.397034,
@@ -825,7 +817,6 @@
   },
   {
     "id": "path102",
-    "name": "Edinborourgh",
     "points": [
       [
         117.03616,
@@ -923,7 +914,6 @@
   },
   {
     "id": "path97",
-    "name": "Swordbreak",
     "points": [
       [
         169.96947,
@@ -1033,7 +1023,6 @@
   },
   {
     "id": "path96",
-    "name": "Wanborne",
     "points": [
       [
         164.57962,
@@ -1095,7 +1084,6 @@
   },
   {
     "id": "path95",
-    "name": "Troutbeck",
     "points": [
       [
         125.90394,
@@ -1313,7 +1301,6 @@
   },
   {
     "id": "path94",
-    "name": "Lanernocost",
     "points": [
       [
         87.702657,
@@ -1471,7 +1458,6 @@
   },
   {
     "id": "path93",
-    "name": "Zalfari",
     "points": [
       [
         79.658704,

@@ -1,11 +1,13 @@
 import { Application, Assets, Point } from 'pixi.js';
 import { Province } from "./game/elements/Province";
-import { CameraContainer } from "./ui/CameraContainer";
+import { CameraContainer } from "./ui/layers/CameraContainer";
 import { World } from './game/World';
-import data from "./assets/mapa.json";
+import data from "./assets/map.json";
 import { HUDContainer } from './ui/hud/HUDContainer';
-import {WorldView} from "./ui/WorldView";
+import {WorldView} from "./ui/layers/WorldView";
 import {ProvinceView} from "./ui/elements/ProvinceView";
+import {ArmyLayer} from "./ui/layers/ArmyLayer";
+import {OrderLayer} from "./ui/layers/OrderLayer";
 
 (async () => {
   // ----------- Basic init ------------------
@@ -26,8 +28,15 @@ import {ProvinceView} from "./ui/elements/ProvinceView";
   // ----------- Creating main containers ------------------
 
   const cameraContainer = new CameraContainer();
+
   const worldView = new WorldView();
   cameraContainer.addChild(worldView);
+
+  const armyLayer = new ArmyLayer();
+  cameraContainer.addChild(armyLayer)
+
+  const orderLayer = new OrderLayer();
+  cameraContainer.addChild(orderLayer)
 
   const guiContainer = new HUDContainer(app);
 
@@ -35,28 +44,38 @@ import {ProvinceView} from "./ui/elements/ProvinceView";
 
   const world = new World();
 
+  const provinceData =
+      await fetch('/api/provinces.json')
+          .then(response => response.json())
+          .then(data => data.map(
+              (item: {id: string, name: string}): void => {
+                  const prov = new Province(
+                      item.id,
+                      item.name
+                  )
+                  world.addProvince(prov);
+              }
+          ))
+
+
   // ----------- Populating the map ------------------
+  // we import all baked-into data - province geometry
 
-  data.map((item): void => {
-    const points: Point[] = item.points.map(
-      ([x, y]: number[]): Point => new Point(x, y)
-    );
-    const prov = new Province(
-        item.id,
-        item.name,
-    )
-
-    world.addProvince(prov);
-    worldView.addProvince(
-        new ProvinceView(
-            prov,
-            points,
-            Math.random()*16_777_216, // 2^24 - semi-random color
-            worldView.onProvinceClicked,
-        )
-    );
+  data.map((item: {id: string, points: number[][]}): void => {
+      const points: Point[] = item.points.map(
+        ([x, y]: number[]): Point => new Point(x, y)
+      );
+      const prov = world.getProvince(item.id);
+      if (!prov) { return }
+      worldView.addProvince(
+          new ProvinceView(
+              prov,
+              points,
+              Math.random()*16_777_216, // 2^24 - semi-random color
+              worldView.onProvinceClicked,
+          )
+      );
   });
-
   
   // ----------- Finalizing display ------------------
 
